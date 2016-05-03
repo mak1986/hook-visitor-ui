@@ -1,0 +1,59 @@
+<div class="row">
+	<div class="col-md-12">
+		<h1>{{ 'ui.accommodations' | hookFilterMachineNameTranslate }}</h1>
+	</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12 col-md-6"
+	ng-repeat="(id, accommodation) in UiController.ui.site.accommodations">
+    <div class="thumbnail">
+      
+      <a href="{{UiController.ui.getHref('accommodation/'+accommodation.id)}}">
+      	<img class="img-responsive" ng-src="http://localhost:3000/images/{{UiController.ui.site.id}}/{{UiController.getAccommodationPrimaryImage(accommodation).name}}" alt="...">
+      </a>
+      
+      <div class="caption">
+        <dl  class="dl-horizontal"> 
+				<dt>
+					{{ 'label.name' | hookFilterMachineNameTranslate | hookFilterCapitalize }}: 
+				</dt>
+				<dd>
+					{{ accommodation.name | hookFilterContentTranslate }}
+				</dd>
+				<dt>
+					{{ 'label.luxury' | hookFilterMachineNameTranslate | hookFilterCapitalize }}: 
+				</dt>
+				<dd>
+					{{ accommodation.luxuryTitle | hookFilterByFieldValue: 'name' }}
+				</dd>
+
+				<dt ng-repeat-start="(id, room) in accommodation.rooms">
+					{{'label.kind' | hookFilterMachineNameTranslate | hookFilterCapitalize }}:
+				</dt>
+				<dd> 
+					{{ room.room_type }}
+				</dd>
+				<dt>
+					{{ 'label.bed_s' | hookFilterMachineNameTranslate | hookFilterCapitalize }}:
+				</dt>
+				<dd ng-repeat-end> 
+					{{ room.bed_combination | hookFilterContentTranslate }}
+				</dd>
+				<dt ng-bind-html="('label.square_area' | hookFilterMachineNameTranslate | hookFilterCapitalize)+':'">
+				</dt>
+				<dd> 
+					{{ accommodation.square_area}}
+				</dd>
+				<dt>
+					{{ 'label.price' | hookFilterMachineNameTranslate }} ({{ 'ui.includes_vat' | hookFilterMachineNameTranslate | hookFilterCapitalize }}):
+				</dt>
+				<dd>
+					{{ accommodation.price }} ฿
+				</dd> 
+			</dl>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,35 @@
+<div id="section-to-print">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>{{ 'ui.invoice' | hookFilterMachineNameTranslate | hookFilterCapitalize }} </h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<h4>{{ UiController.ui.site.name | hookFilterContentTranslate }}</h4>
+			<div>
+				<p>{{ UiController.ui.site.address | hookFilterContentTranslate }}</p>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<p>{{ 'ui.tel' | hookFilterMachineNameTranslate | hookFilterCapitalize }}: {{ UiController.ui.site.telephone }}</p>
+		</div>
+		<div class="col-md-6">
+			<p class="text-right">{{ 'ui.issued_on' | hookFilterMachineNameTranslate | hookFilterCapitalize }}: {{ UiController.getDate() | amDateFormat: 'DD/MM/YYYY HH:mm'}}</p>
+		</div>
+	</div>
+	
+	<br>
+	<div class="row" 
+		ng-include="UiController.getComponentView('accommodation_booking_form','order_detail')"
+		ng-init="UiController.showActions = true"></div>
+	
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<a class="btn btn-primary" href="{{ UiController.ui.getHref('payment') }}">{{ 'ui.continue' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</a>
+		</div>
+	</div>
+</div>

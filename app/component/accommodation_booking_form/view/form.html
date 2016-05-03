@@ -1,0 +1,112 @@
+<div ng-controller="AccommodationBookingFormController as AccommodationBookingFormController"
+	ng-init="AccommodationBookingFormController.accommodation = accommodation">
+
+    <div class="row">
+
+      <div class="col-md-12">
+
+      	<div class="form-group">
+		
+		    <label for="check-in">
+		    
+		    	{{'label.check_in' | hookFilterMachineNameTranslate }}
+		    
+		    </label>		    
+		
+			<p class="input-group">
+
+			    <input type="text" 
+			    	class="form-control" 
+			    	id="check-in"  
+			    	uib-datepicker-popup="{{ AccommodationBookingFormController.format }}" 
+			    	ng-model="AccommodationBookingFormController.from" 
+			    	is-open="AccommodationBookingFormController.popup1.opened" 
+			    	datepicker-options="AccommodationBookingFormController.fromOptions" 
+			    	ng-required="true" 
+			    	clear-text="{{ 'ui.clear' | hookFilterMachineNameTranslate }}" 
+			    	close-text="{{ 'ui.close' | hookFilterMachineNameTranslate }}" 
+			    	current-text="{{ 'ui.today' | hookFilterMachineNameTranslate }}" 
+			    	/>
+			    
+			    <span class="input-group-btn">
+	            	
+	            	<button type="button" 
+	            		class="btn btn-default" 
+	            		ng-click="AccommodationBookingFormController.open1()">
+	            	
+	            		<i class="glyphicon glyphicon-calendar"></i>
+	            	
+	            	</button>
+	          	
+	          	</span>
+		
+			</p>
+
+		</div>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-12">
+
+        <div class="form-group">
+
+		    <label for="check-out">
+		    
+		    	{{'label.check_out' | hookFilterMachineNameTranslate }}
+		    
+		    </label>
+			
+			<p class="input-group">
+
+	        	<input type="text" 
+	        		class="form-control"
+			    	id="check-out"
+	        		uib-datepicker-popup="{{ AccommodationBookingFormController.format }}" 
+	        		ng-model="AccommodationBookingFormController.to" 
+	        		is-open="AccommodationBookingFormController.popup2.opened" 
+	        		datepicker-options="AccommodationBookingFormController.toOptions" 
+	        		ng-required="true"
+			    	clear-text="{{ 'ui.clear' | hookFilterMachineNameTranslate }}" 
+	        		close-text="{{ 'ui.close' | hookFilterMachineNameTranslate }}" 
+			    	current-text="{{ 'ui.today' | hookFilterMachineNameTranslate }}" 
+	        		/>
+
+		        <span class="input-group-btn">
+
+		            <button type="button" 
+		            	class="btn btn-default" 
+		            	ng-click="AccommodationBookingFormController.open2()">
+
+		            	<i class="glyphicon glyphicon-calendar"></i>
+
+		            </button>
+
+		        </span>
+
+			</p>
+
+        </div>
+
+      </div>
+
+    </div>
+    
+    <div class="row">
+		
+		<div class="col-md-12">
+
+			<button type="button" 
+		  		class="btn btn-default" 
+		  		data-toggle="modal" 
+		  		data-target=".bs-example-modal"
+		  		ng-click="AccommodationBookingFormController.book()">{{ 'ui.book' | hookFilterMachineNameTranslate }}</button>
+
+		</div>
+
+    </div>
+
+</div>

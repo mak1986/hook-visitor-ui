@@ -1,0 +1,51 @@
+<div class="col-md-12" 
+	ng-controller="AccommodationBookingDetailController as AccommodationBookingDetailController"
+	ng-init="AccommodationBookingDetailController.accommodationOrders = UiController.ui.getOrder().accommodationOrders">
+	<table class="table">
+		<tr>
+			<th>#</th>
+			<th>{{ 'ui.accommodation' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</th>
+			<th>{{ 'ui.check_in' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</th>
+			<th>{{ 'ui.check_out' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</th>
+			<th>{{ 'ui.duration' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</th>
+			<th>{{ 'ui.charges' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</th>
+			<th ng-if="UiController.showActions">{{ 'ui.actions' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</th>
+		</tr>
+		<tr ng-repeat="(id, accommodationOrder) in AccommodationBookingDetailController.accommodationOrders">
+			<td>{{ $index + 1 }}</td>
+			<td>{{ accommodationOrder.accommodation | hookFilterByFieldValue: 'name' | hookFilterContentTranslate }}</td>
+			<td>{{ accommodationOrder.from }}</td>
+			<td>{{ accommodationOrder.to }}</td>
+			<td>{{ accommodationOrder.to | amDifference: accommodationOrder.from : 'days' }} {{ 'ui.nights' | hookFilterMachineNameTranslate }}</td>
+			<td>
+				{{ accommodationOrder.accommodation | hookFilterByFieldValue: 'price' | hookFilterVat: 'exclude'}} ฿ X {{  accommodationOrder.to | amDifference: accommodationOrder.from : 'days' }} {{ 'ui.nights' | hookFilterMachineNameTranslate }} = 	{{AccommodationBookingDetailController.getLinePrice(accommodationOrder) | hookFilterVat: 'exclude'}} ฿</td>
+			<td ng-if="UiController.showActions"><a class="text-danger" href="" ng-click="AccommodationBookingDetailController.delete(accommodationOrder)"><span class="glyphicon glyphicon-remove"></span></a></td>
+		</tr>
+	</table>
+	<div class="row">
+		<div class="col-md-7">
+			
+		</div>
+		<div class="col-md-3">
+			<dl  class="dl-horizontal">
+				<dt>
+					{{ 'ui.subtotal' | hookFilterMachineNameTranslate | hookFilterCapitalize }}
+				</dt>
+				<dd>
+					{{ AccommodationBookingDetailController.getTotalPrice() | hookFilterVat: 'exclude'}} ฿
+				</dd>
+				<dt>
+					{{ 'ui.vat' | hookFilterMachineNameTranslate | hookFilterCapitalize }} (7%) 
+				</dt>
+				<dd>
+					{{ AccommodationBookingDetailController.getTotalPrice() | hookFilterVat: 'vat'}} ฿
+				</dd>
+				<dt>
+					{{ 'ui.total_with_vat' | hookFilterMachineNameTranslate | hookFilterCapitalize }}
+				</dt>
+				<dd>
+					{{ AccommodationBookingDetailController.getTotalPrice() }} ฿
+				</dd>
+		</div>
+	</div>
+</div>

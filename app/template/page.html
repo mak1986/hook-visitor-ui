@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col-md-12">
+		<section ng-repeat="(id, section) in UiController.getSections() | orderObjectBy: 'weight'"
+			ng-include="UiController.getSectionView((section.kind | hookFilterByFieldValue: 'name'))"></section>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<h3>{{ 'ui.facilities_in_the_resort' | hookFilterMachineNameTranslate }}</h3>
+		<ul>
+			<li ng-repeat="(id, facility) in UiController.ui.site.facilities">{{ facility.name | hookFilterContentTranslate }}</li>
+		</ul>
+	</div>	
+</div>

@@ -1,0 +1,45 @@
+<div id="section-to-print" ng-controller="ReceiptController as ReceiptController">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>{{ 'ui.receipt' | hookFilterMachineNameTranslate | hookFilterCapitalize }} </h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<h4>{{ UiController.ui.site.name | hookFilterContentTranslate }}</h4>
+			<div>
+				<p>{{ UiController.ui.site.address | hookFilterContentTranslate }}</p>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<p>{{ 'ui.tel' | hookFilterMachineNameTranslate | hookFilterCapitalize }}: {{ UiController.ui.site.telephone }}</p>
+		</div>
+		<div class="col-md-6">
+			<p class="text-right">{{ 'ui.issued_on' | hookFilterMachineNameTranslate | hookFilterCapitalize }}: {{ UiController.getDate() | amDateFormat: 'DD/MM/YYYY HH:mm'}}</p>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-12">
+			<p>
+				<strong>{{ 'ui.to' |  hookFilterMachineNameTranslate | hookFilterCapitalize }}:</strong> 
+			</p>
+			<p>
+				{{ UiController.ui.getOrder().payment | hookFilterByFieldValue: 'first_name' }}  {{ UiController.ui.getOrder().payment | hookFilterByFieldValue: 'last_name' }}
+			</p>
+			<p>
+				{{ 'label.email' | hookFilterMachineNameTranslate | hookFilterCapitalize }}: {{ UiController.ui.getOrder().payment | hookFilterByFieldValue: 'email' }}  
+			</p>
+			<p>
+				{{ 'label.phone_number' | hookFilterMachineNameTranslate | hookFilterCapitalize }}: {{ UiController.ui.getOrder().payment | hookFilterByFieldValue: 'phone_area_code' }} {{ UiController.ui.getOrder().payment | hookFilterByFieldValue: 'phone_number' }}  
+			</p>
+		</div>	
+	</div>
+	<br>
+	<div class="row" 
+		ng-include="UiController.getComponentView('accommodation_booking_form','order_detail')"
+		ng-init="UiController.showActions = false"></div>
+</div>

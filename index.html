@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" ng-controller="UiController as UiController">
+
+	<head>
+
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		 <!-- Tell the browser to be responsive to screen width -->
+	  	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<!-- Bootstrap 3.3.5 -->
+	  	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<!-- Flag icons -->
+	  	<link rel="stylesheet" href="/bower_components/flag-icon-css/css/flag-icon.min.css">
+	  	
+	  	<link rel="stylesheet" href="app/css/style.css">
+	  	<link rel="stylesheet" href="app/css/sticky-footer-navbar.css">
+
+	</head>
+
+	<body ng-cloak>
+
+		<!-- Fixed navbar -->
+	    <nav class="navbar navbar-inverse navbar-fixed-top"
+	    ng-if="UiController.ui.isReady()">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="{{ UiController.ui.getHref('home') }}">{{ UiController.ui.site.name | hookFilterContentTranslate  | hookFilterTitle }}</a>
+	        </div>
+	        <div id="navbar" class="collapse navbar-collapse" ng-class="{'in': !navCollapsed}">
+	          <ul class="nav navbar-nav">
+	          	<li ng-if="UiController.mainMenuHasHome()">
+	          		<a href="{{ UiController.ui.getHref('home') }}">{{ 'ui.home' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</a>
+	          	</li>
+	           	<li>
+	          		<a href="{{ UiController.ui.getHref('accommodations') }}">{{ 'ui.accommodations' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</a>
+	          	</li>
+	            <li ng-if="page.is_main_menu && page.name !== 'home'" 
+	            	ng-repeat="(id, page) in UiController.ui.site.pages | orderObjectBy: 'weight'">
+	            	<a href="{{ UiController.ui.getHref(page.name) }}">{{ page.meta_title | hookFilterContentTranslate }}</a>
+	            </li>
+	          </ul>
+
+
+
+	          <ul class="nav navbar-nav navbar-right">
+		           
+		           <li ng-show="UiController.ui.countOrder() > 0">
+			          <a href="{{ UiController.ui.getHref('invoice') }}"> ({{ UiController.ui.countOrder() }}) <span class='glyphicon glyphicon-shopping-cart'></span> {{ 'ui.book_now' | hookFilterMachineNameTranslate | hookFilterCapitalize }}</a>
+			        </li>
+
+		            <li uib-dropdown>
+			          
+			          <a href="#" uib-dropdown-toggle role="button" aria-haspopup="true" aria-expanded="false">
+			          
+			          	<span class="flag-icon flag-icon-{{ UiController.ui.getFlagByIso2Code(UiController.ui.getLanguage()) }}"></span> 
+			          	<span class="caret"></span>
+			          
+			          </a>
+			          
+			          <ul class="dropdown-menu" uib-dropdown-menu>
+			          
+			            <li ng-if="language.iso_2_code != UiController.ui.getLanguage()" ng-click="UiController.ui.setLanguage(language.iso_2_code)"
+			            	ng-repeat="(id, language) in UiController.ui.site.publishedLanguages">
+			          
+			            	<a href="">
+			          
+			            		<span class="flag-icon flag-icon-{{ language.flag }}"></span> {{ language.native_name }}
+			          
+			            	</a>
+			          
+			            </li>
+			          
+			          </ul>
+
+			        </li>
+
+		    	</ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </nav>
+
+
+
+
+    	<!-- Begin page content -->
+		<div class="container main-content" 
+			ng-if="UiController.ui.isReady()"
+			ng-view></div>
+
+		<footer class="footer"
+			ng-if="UiController.ui.isReady()">
+      		<div class="container">
+      			<div class="row">
+					<div class="col-md-4">
+        				<p class="text-muted">
+        					<strong>{{ 'ui.contact' |  hookFilterMachineNameTranslate | hookFilterTitle }}:</strong><br>
+        					{{ UiController.ui.site.address | hookFilterContentTranslate }}<br>
+        					<span ng-if="UiController.ui.site.telephone !== ''">Tel.: {{ UiController.ui.site.telephone }}<br></span>
+        					<span ng-if="UiController.ui.site.fax !== ''">Fax.: {{ UiController.ui.site.fax }}</span>
+        				</p>
+					</div>
+					<div class="col-md-4">
+        				<p class="text-muted"><strong>{{ 'ui.help' | hookFilterMachineNameTranslate | hookFilterTitle }}:</strong><br>
+							<span ng-if="page.is_footer_menu" 
+        						ng-repeat="(id, page) in UiController.ui.site.pages">
+	        					<a href="{{ UiController.ui.getHref(page.name) }}">
+	        						{{ page.meta_title | hookFilterContentTranslate }}
+	        					</a><br>
+        					</span>
+        				</p>
+					</div>
+					<div class="col-md-4">
+        				<p class="text-muted"><strong>{{ 'ui.follow_us' | hookFilterMachineNameTranslate | hookFilterTitle }}:</strong><br>
+        					<a href="{{ UiController.ui.site.facebook_link }}"
+        						target="_blank"
+        						ng-if="UiController.ui.site.facebook_link !== ''">
+        						Facebook
+        					</a>
+        					<br ng-if="UiController.ui.site.facebook_link !== ''">
+        					
+        					<a href="{{ UiController.ui.site.twitter_link }}"
+        						target="_blank"
+        						ng-if="UiController.ui.site.twitter_link !== ''">
+        						Twitter
+        					</a>
+        					<br ng-if="UiController.ui.site.twitter_link !== ''">
+
+        					<a href="{{ UiController.ui.site.tripadvisor_link }}"
+        						target="_blank"
+        						ng-if="UiController.ui.site.tripadvisor_link !== ''">
+        						Tripadvisor
+        					</a>
+        					<br ng-if="UiController.ui.site.tripadvisor_link !== ''">
+        				</p>
+					</div>
+      			</div>
+      			<div class="row">
+      				<div class="col-md-12">
+      					<p class="text-muted text-center">
+      						© copyright {{ UiController.ui.site.name | hookFilterContentTranslate }}
+      					</p>
+      				</div>
+      			</div>
+    	  	</div>
+	    </footer>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+
+		<!--<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
+		<script src="/bower_components/angular/angular.js"></script>
+		<script src="/bower_components/angular-route/angular-route.js"></script>
+		<script src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+		<script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+		<script src="/bower_components/moment/moment.js"></script>
+		<script src="/bower_components/angular-moment/angular-moment.min.js"></script>
+		<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		<script src="app/js/app.js"></script>
+		<script src="app/js/route.js"></script>
+		
+		<script src="http://localhost:3000/dist/main.js"></script>
+
+		
+		<script src="app/js/service/user_interface/_UserInterface.js"></script>
+		<script src="app/js/service/user_interface/UserInterface.js"></script>
+		
+
+
+		<!-- Controllers -->
+		<script src="app/component/payment/controller/PaymentController.js"></script>
+		<script src="app/component/receipt/controller/ReceiptController.js"></script>
+		<script src="app/component/accommodation_booking_form/controller/AccommodationBookingFormController.js"></script>
+		<script src="app/component/accommodation_booking_form/controller/AccommodationBookingDetailController.js"></script>
+		<script src="app/js/controller/UiController.js"></script>
+
+
+	
+	</body>
+
+</html>

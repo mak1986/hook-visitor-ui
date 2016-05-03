@@ -1,0 +1,15 @@
+{
+  "name": "hook-visitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/karma/bin/karma start tests/karma.conf.js"
+  },
+  "author": "Mak Jacobsen",
+  "license": "ISC",
+  "dependencies": {
+    "bower": "^1.7.2"
+  },
+  "devDependencies": {}
+}
